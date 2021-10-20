@@ -2,8 +2,8 @@ import csv
 import time
 from openpyxl import Workbook
 import gspread
-import matplotlib.pyplot as plt
-import pandas as pd
+# import matplotlib.pyplot as plt
+# import pandas as pd
 import requests
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -16,7 +16,7 @@ def Twitch_Auth():
         'secrets.json', scope)
     client = gspread.authorize(credentials)
     client_id = 'pgjgwxpokkqeg4sp1jcxffyeawaepc'
-    client_secret = '6j62oi625sjrij4btfi3re0r6rql8f'
+    client_secret = 'h9xkw35o2vgi0jvfoku2sf1x3fk25o'
     starttime = time.time()
 
     body = {
@@ -25,6 +25,7 @@ def Twitch_Auth():
         "grant_type": 'client_credentials'
     }
     r = requests.post('https://id.twitch.tv/oauth2/token', body)
+    print(r)
     keys = r.json()
     headers = {
         'Client-ID': client_id,
