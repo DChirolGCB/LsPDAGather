@@ -38,10 +38,12 @@ def Twitch_Auth():
 
 
 def total_fr(stream_data):
+    print(stream_data)
     total_fr = 0
     i = 0
-
-    while i < 98:
+    pda = 0
+    totalpda = 0
+    while i < 99:
         total_fr += stream_data['data'][i]['viewer_count']
         i += 1
 
