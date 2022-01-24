@@ -13,8 +13,6 @@ def Twitch_Auth(config_file):
         data = json.load(json_file)
         client_id = data['client_id']
         client_secret = data['client_secret']
-    
-    time.time()
 
     body = {
         'client_id': client_id,
@@ -30,10 +28,6 @@ def Twitch_Auth(config_file):
     stream = requests.get(
         'https://api.twitch.tv/helix/streams?first=100&language=fr', headers=headers)
     return stream
-
-
-def split(word):
-    return [char for char in word]
 
 
 def col2num(col):
@@ -53,7 +47,7 @@ def total_fr(stream_data, amount):
 
     now = dateuser.now()
     today = now.strftime("%H:%M:%S")
-    print(f"{today} : Il y a {total_fr} viewers fr sur les " + str(amount) + " premiers streams fr")
+    print(f"Last datas gathered at : {today}")
     return total_fr
 
 

@@ -1,18 +1,20 @@
 import datetime
 import os.path
-import re
 import sys
-import time
-import argparse
 
+import time
 from datetime import datetime
 from datetime import date
 
 import openpyxl
 from openpyxl.utils import get_column_letter
+
+import argparse
+
 from func import Twitch_Auth, col2num, getline, total_fr
 
 if __name__ == '__main__':
+    
     parser = argparse.ArgumentParser(description='LsPDAGather')
     parser.add_argument('-f', '--file', help='config file', required=True)
     parser.add_argument('-o', '--output-dir', help='output directory for generated files', required=False, default='XLfiles')
@@ -20,7 +22,9 @@ if __name__ == '__main__':
     parser.add_argument('-n', '--number-of-streamers', help='number of streamers to gather', required=False, type=int, default=15)
     parser.add_argument('-i', '--iterations', help='number of requests to make', required=False, type=int, default=50)
     parser.add_argument('-a', '--data-amount', help='total number of streamers to generate data', type=int, required=False, default=98)
+    
     args = parser.parse_args()    
+    
     # Filename generation
     today = date.today()
     output_dir = args.output_dir
@@ -28,6 +32,7 @@ if __name__ == '__main__':
         os.makedirs(output_dir, exist_ok=True)
     except OSError as e:
         print("Creation of the directory %s failed: %s" % output_dir, e)
+        sys.exit(1)
 
     filepath = f"StatTwitch{today}"
     cfilepath = f"StatTwitch{today}.xlsx"
@@ -50,7 +55,7 @@ if __name__ == '__main__':
     t = 'B'
     col = 1
     firstpassage = True
-    line = 1
+    line = 2
 
     for n in range(0, args.iterations):
         totalviewers = 0
@@ -68,12 +73,16 @@ if __name__ == '__main__':
 
         # Analizes the TOP_NB Twitch streamers
         for i in range(0, args.number_of_streamers + 1):
+            
+            #Calculating PDA value from current analyzed channel
             pda = (stream_data['data'][i]['viewer_count'] * 100) / total_frbis
             pda = "{: .2f}".format(pda)
+            
+            # 
             username = stream_data['data'][i]['user_name']
             viewer_count = stream_data['data'][i]['viewer_count']
             title = stream_data['data'][i]['title']
-            data = [username, pda]
+            
             # Table format
             if firstpassage:
                 ws[f'A{2}'] = today
